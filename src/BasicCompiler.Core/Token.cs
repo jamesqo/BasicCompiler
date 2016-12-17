@@ -20,11 +20,11 @@ namespace BasicCompiler.Core
 
         public static Token CloseParenthesis(string value) => new Token(value, TokenType.CloseParenthesis);
 
-        public static Token Identifier(string value) => new Token(value, TokenType.CloseParenthesis);
+        public static Token Identifier(string value) => new Token(value, TokenType.Identifier);
 
-        public static Token Number(string value) => new Token(value, TokenType.CloseParenthesis);
+        public static Token Number(string value) => new Token(value, TokenType.Number);
 
-        public static Token OpenParenthesis(string value) => new Token(value, TokenType.CloseParenthesis);
+        public static Token OpenParenthesis(string value) => new Token(value, TokenType.OpenParenthesis);
 
         public string Value { get; set; }
         public TokenType Type { get; set; }
