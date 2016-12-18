@@ -8,6 +8,8 @@ namespace BasicCompiler.Core
     {
         private readonly List<AstNode> _children;
 
+        private AstNode _parent;
+
         private AstNode(string value, NodeType type)
         {
             Value = value;
@@ -19,19 +21,59 @@ namespace BasicCompiler.Core
 
         public static AstNode NumberLiteral(string value) => new AstNode(value, NodeType.NumberLiteral);
 
+        public bool IsRoot => _parent == null;
+
+        public AstNode Parent => _parent;
+
         public string Value { get; }
+
         public IReadOnlyList<AstNode> Children => _children.AsReadOnly();
+
         public NodeType Type { get; }
+
+        public void Accept(IAstVisitor visitor)
+        {
+            // Do a depth-first traversal.
+
+            switch (Type)
+            {
+                case NodeType.CallExpression:
+                    visitor.VisitCallExpression(this);
+                    break;
+                case NodeType.NumberLiteral:
+                    visitor.VisitNumberLiteral(this);
+                    break;
+            }
+
+            foreach (AstNode child in _children)
+            {
+                child.Accept(visitor);
+            }
+
+            switch (Type)
+            {
+                case NodeType.CallExpression:
+                    visitor.LeaveCallExpression(this);
+                    break;
+            }
+        }
 
         public AstNode AddChild(AstNode child)
         {
             _children.Add(child);
+            child._parent = this;
             return this;
         }
 
         public AstNode AddChildren(params AstNode[] children)
         {
             _children.AddRange(children);
+            
+            foreach (AstNode child in children)
+            {
+                child._parent = this;
+            }
+
             return this;
         }
 
@@ -56,6 +98,11 @@ namespace BasicCompiler.Core
             }
 
             return true;
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
         }
     }
 }

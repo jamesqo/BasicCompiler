@@ -14,5 +14,10 @@ namespace BasicCompiler.Core
 
         // TODO: Add equality operators to both classes.
         public bool Equals(Ast other) => other?.Root != null && Root.Equals(other.Root);
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
