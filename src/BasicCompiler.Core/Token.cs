@@ -2,14 +2,6 @@ using System;
 
 namespace BasicCompiler.Core
 {
-    public enum TokenType
-    {
-        CloseParenthesis,
-        Identifier,
-        Number,
-        OpenParenthesis,
-    }
-
     public class Token : IEquatable<Token>
     {
         private Token(string value, TokenType type)
@@ -38,7 +30,7 @@ namespace BasicCompiler.Core
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            throw new NotImplementedException();
         }
 
         public override string ToString() => $"{{ {nameof(Value)}: {Value}, {nameof(Type)}: {Type} }}";

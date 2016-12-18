@@ -9,5 +9,6 @@ namespace BasicCompiler.Tests
     {
         public string Input { get; set; }
         public IEnumerable<Token> Tokens { get; set; }
+        public Ast Ast { get; set; }
     }
 }

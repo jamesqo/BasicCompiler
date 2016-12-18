@@ -6,7 +6,7 @@ namespace BasicCompiler.Core
 {
     public static class Lexer
     {
-        public static List<Token> Lex(string input)
+        public static IEnumerable<Token> Lex(string input)
         {
             var tokens = new List<Token>();
 

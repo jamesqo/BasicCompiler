@@ -8,15 +8,13 @@ namespace BasicCompiler.Tests
 {
     public class LexerTests
     {
-        [Theory]
-        [ClassData(typeof(SampleInputs))]
+        [Theory, ClassData(typeof(SampleInputs))]
         public void Lex(ExpectedResult er)
         {
             Assert.Equal(er.Tokens, Lexer.Lex(er.Input));
         }
 
-        [Theory]
-        [MemberData(nameof(PropertiesData))]
+        [Theory, MemberData(nameof(PropertiesData))]
         public void Properties(Token token, string value, TokenType type)
         {
             Assert.Equal(value, token.Value);
