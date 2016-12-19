@@ -26,11 +26,30 @@ namespace BasicCompiler.Tests
                 },
                 Ast = new Ast(
                     CallExpression("add")
-                    .AddChildren(
+                    .AddTwo(
                         NumberLiteral("4"),
-                        NumberLiteral("90")
-                    )
-                )
+                        NumberLiteral("90"))),
+                Transforms = new[]
+                {
+                    new AddTransform(5)
+                },
+                NewAsts = new[]
+                {
+                    new Ast(
+                        CallExpression("add") // Injected
+                        .AddTwo(
+                            NumberLiteral("5"), // Injected
+                            CallExpression("add")
+                            .AddTwo(
+                                CallExpression("add") // Injected
+                                .AddTwo(
+                                    NumberLiteral("5"), // Injected
+                                    NumberLiteral("4")),
+                                CallExpression("add") // Injected
+                                .AddTwo(
+                                    NumberLiteral("5"), // Injected
+                                    NumberLiteral("90")))))
+                }
             },
             new ExpectedResult
             {
@@ -49,15 +68,43 @@ namespace BasicCompiler.Tests
                 },
                 Ast = new Ast(
                     CallExpression("add")
-                    .AddChildren(
+                    .AddTwo(
                         CallExpression("subtract")
-                        .AddChildren(
+                        .AddTwo(
                             NumberLiteral("4"),
-                            NumberLiteral("1")
-                        ),
-                        NumberLiteral("2")
-                    )
-                )
+                            NumberLiteral("1")),
+                        NumberLiteral("2"))),
+                Transforms = new[]
+                {
+                    new AddTransform(2)
+                },
+                NewAsts = new[]
+                {
+                    new Ast(
+                        CallExpression("add") // Injected
+                        .AddTwo(
+                            NumberLiteral("2"), // Injected
+                            CallExpression("add")
+                            .AddTwo(
+                                CallExpression("add") // Injected
+                                .AddTwo(
+                                    NumberLiteral("2"), // Injected
+                                    CallExpression("subtract")
+                                    .AddTwo(
+                                        CallExpression("add") // Injected
+                                        .AddTwo(
+                                            NumberLiteral("2"), // Injected
+                                            NumberLiteral("4")),
+                                        CallExpression("add") // Injected
+                                        .AddTwo(
+                                            NumberLiteral("2"), // Injected
+                                            NumberLiteral("1")))),
+                                CallExpression("add") // Injected
+                                .AddTwo(
+                                    NumberLiteral("2"), // Injected
+                                    NumberLiteral("2")))))
+
+                }
             },
             new ExpectedResult
             {
@@ -76,15 +123,12 @@ namespace BasicCompiler.Tests
                 },
                 Ast = new Ast(
                     CallExpression("multiply")
-                    .AddChildren(
+                    .AddTwo(
                         CallExpression("divide")
-                        .AddChildren(
+                        .AddTwo(
                             NumberLiteral("9"),
-                            NumberLiteral("111")
-                        ),
-                        NumberLiteral("0")
-                    )
-                )
+                            NumberLiteral("111")),
+                        NumberLiteral("0")))
             },
             new ExpectedResult
             {
@@ -103,22 +147,21 @@ namespace BasicCompiler.Tests
                 },
                 Ast = new Ast(
                     CallExpression("exp")
-                    .AddChildren(
+                    .AddTwo(
                         NumberLiteral("16"),
                         CallExpression("exp")
-                        .AddChildren(
+                        .AddTwo(
                             NumberLiteral("9"),
-                            NumberLiteral("1")
-                        )
-                    )
-                )
+                            NumberLiteral("1"))))
             }
         };
 
-        public IEnumerator<object[]> GetEnumerator()
+        public static IEnumerable<object[]> AsEnumerable()
         {
-            return ExpectedResults.Select(res => new object[] { res }).GetEnumerator();
+            return ExpectedResults.Select(res => new object[] { res });
         }
+
+        public IEnumerator<object[]> GetEnumerator() => AsEnumerable().GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }

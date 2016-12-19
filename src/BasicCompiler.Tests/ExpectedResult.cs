@@ -10,5 +10,7 @@ namespace BasicCompiler.Tests
         public string Input { get; set; }
         public IEnumerable<Token> Tokens { get; set; }
         public Ast Ast { get; set; }
+        public IEnumerable<IAstTransform> Transforms { get; set; }
+        public IEnumerable<Ast> NewAsts { get; set; }
     }
 }

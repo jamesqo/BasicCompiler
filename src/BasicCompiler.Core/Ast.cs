@@ -10,6 +10,8 @@ namespace BasicCompiler.Core
 
         public AstNode Root { get; }
 
+        public void Accept(IAstVisitor visitor) => Root.Accept(visitor);
+
         public override bool Equals(object obj) => obj is Ast ast && Equals(ast);
 
         // TODO: Add equality operators to both classes.
@@ -19,5 +21,7 @@ namespace BasicCompiler.Core
         {
             throw new NotImplementedException();
         }
+
+        // TODO: Should we override ToString and introduce a debugger proxy for this type as well?
     }
 }

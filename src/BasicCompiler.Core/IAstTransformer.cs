@@ -4,11 +4,8 @@ using System.Text;
 
 namespace BasicCompiler.Core
 {
-    public enum TokenType
+    public interface IAstTransformer : IAstVisitor
     {
-        CloseParenthesis,
-        Identifier,
-        Number,
-        OpenParenthesis
+        Ast NewAst { get; }
     }
 }

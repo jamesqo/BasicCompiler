@@ -49,12 +49,12 @@ namespace BasicCompiler.Core
                             case TokenType.CloseParenthesis:
                                 return callNode;
                             case TokenType.OpenParenthesis:
-                                callNode.AddChild(ParseNext(enumerator));
+                                callNode.Add(ParseNext(enumerator));
                                 break;
                             case TokenType.Identifier:
                                 throw new ArgumentException("Unexpected identifier.");
                             case TokenType.Number:
-                                callNode.AddChild(ParseNext(enumerator));
+                                callNode.Add(ParseNext(enumerator));
                                 break;
                         }
                     }

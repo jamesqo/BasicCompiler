@@ -4,11 +4,8 @@ using System.Text;
 
 namespace BasicCompiler.Core
 {
-    public enum TokenType
+    public interface IAstTransform
     {
-        CloseParenthesis,
-        Identifier,
-        Number,
-        OpenParenthesis
+        IAstTransformer CreateTransformer();
     }
 }

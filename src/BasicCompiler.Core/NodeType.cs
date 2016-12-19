@@ -7,6 +7,6 @@ namespace BasicCompiler.Core
     public enum NodeType
     {
         CallExpression,
-        NumberLiteral,
+        NumberLiteral
     }
 }

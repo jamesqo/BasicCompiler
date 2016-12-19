@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace BasicCompiler.Core
 {
-    public class AstNode : IEquatable<AstNode>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerTypeProxy(typeof(DebuggerProxy))]
+    public partial class AstNode : IEquatable<AstNode>
     {
         private readonly List<AstNode> _children;
 
@@ -21,15 +25,20 @@ namespace BasicCompiler.Core
 
         public static AstNode NumberLiteral(string value) => new AstNode(value, NodeType.NumberLiteral);
 
+        public IReadOnlyList<AstNode> Children => _children.AsReadOnly();
+
+        // TODO: More performant implementation.
+        public int Depth => IsLeaf ? 0 : _children.Max(c => c.Depth) + 1;
+
+        public bool IsLeaf => _children.Count == 0;
+
         public bool IsRoot => _parent == null;
 
         public AstNode Parent => _parent;
 
-        public string Value { get; }
-
-        public IReadOnlyList<AstNode> Children => _children.AsReadOnly();
-
         public NodeType Type { get; }
+
+        public string Value { get; }
 
         public void Accept(IAstVisitor visitor)
         {
@@ -58,14 +67,16 @@ namespace BasicCompiler.Core
             }
         }
 
-        public AstNode AddChild(AstNode child)
+        public AstNode Add(AstNode child)
         {
             _children.Add(child);
             child._parent = this;
             return this;
         }
 
-        public AstNode AddChildren(params AstNode[] children)
+        public AstNode AddTwo(AstNode child1, AstNode child2) => AddMany(child1, child2);
+
+        public AstNode AddMany(params AstNode[] children)
         {
             _children.AddRange(children);
             
@@ -84,6 +95,7 @@ namespace BasicCompiler.Core
             if (other == null ||
                 Type != other.Type ||
                 Value != other.Value ||
+                (object)Parent != other.Parent || // TODO: What's the best way to handle this?
                 _children.Count != other._children.Count)
             {
                 return false;
@@ -103,6 +115,16 @@ namespace BasicCompiler.Core
         public override int GetHashCode()
         {
             throw new NotImplementedException();
+        }
+
+        // TODO: Should we override ToString instead of DebuggerDisplay?
+
+        private string DebuggerDisplay
+        {
+            get
+            {
+                return $"Type: {Type}, Value: {Value}, Count: {_children.Count}, Depth: {Depth}";
+            }
         }
     }
 }
