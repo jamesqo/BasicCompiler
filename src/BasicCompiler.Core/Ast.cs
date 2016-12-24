@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BasicCompiler.Core
+﻿namespace BasicCompiler.Core
 {
+    using System;
+
     public class Ast : IEquatable<Ast>
     {
         public Ast(AstNode root) => Root = root;

@@ -1,15 +1,16 @@
-﻿using BasicCompiler.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xunit;
-
-namespace BasicCompiler.Tests
+﻿namespace BasicCompiler.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using BasicCompiler.Core;
+    using Xunit;
+
     public class TransformTests
     {
-        [Theory, ClassData(typeof(SampleInputs))]
+        [Theory]
+        [ClassData(typeof(SampleInputs))]
         public void TransformAst(ExpectedResult er)
         {
             var transforms = er.Transforms.ToArray();
@@ -17,13 +18,11 @@ namespace BasicCompiler.Tests
 
             Assert.Equal(transforms.Length, newAsts.Length);
 
-            Ast currentAst = er.Ast;
+            Ast baseAst = er.Ast;
 
             for (int i = 0; i < transforms.Length; i++)
             {
-                var transformer = transforms[i].CreateTransformer();
-                currentAst.Accept(transformer);
-                Ast newAst = transformer.NewAst;
+                Ast newAst = transforms[i].Apply(baseAst);
 
                 Assert.Equal(newAsts[i], newAst);
             }

@@ -1,11 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-
 namespace BasicCompiler.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+
     public static class Lexer
     {
+        /// <summary>
+        /// Converts a raw string into a list of tokens.
+        /// </summary>
+        /// <param name="input">The string to lex.</param>
+        /// <returns>A list of tokens based on the string.</returns>
         public static IEnumerable<Token> Lex(string input)
         {
             var tokens = new List<Token>();
@@ -18,7 +23,7 @@ namespace BasicCompiler.Core
                 {
                     continue; // Ignore whitespace.
                 }
-                
+
                 if (c == '(' || c == ')')
                 {
                     bool openParenthesis = c == '(';

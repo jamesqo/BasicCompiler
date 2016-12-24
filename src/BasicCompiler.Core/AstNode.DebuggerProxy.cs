@@ -1,13 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-
-namespace BasicCompiler.Core
+﻿namespace BasicCompiler.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Text;
+
+    /// <content>
+    /// Contains the debugger proxy for an <see cref="AstNode"/>.
+    /// </content>
     public partial class AstNode
     {
+        /// <summary>
+        /// The debugger proxy for an <see cref="AstNode"/>.
+        /// </summary>
         private class DebuggerProxy
         {
             private readonly AstNode _node;

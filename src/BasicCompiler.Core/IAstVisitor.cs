@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BasicCompiler.Core
+﻿namespace BasicCompiler.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     public interface IAstVisitor
     {
         // TODO: Is there a better pattern for this?

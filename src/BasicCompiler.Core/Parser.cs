@@ -1,11 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BasicCompiler.Core
+﻿namespace BasicCompiler.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     public static class Parser
     {
+        /// <summary>
+        /// Parses a list of tokens into an AST.
+        /// </summary>
+        /// <param name="tokens">The tokens to parse.</param>
+        /// <returns>The parsed AST.</returns>
         public static Ast Parse(IEnumerable<Token> tokens)
         {
             using (IEnumerator<Token> enumerator = tokens.GetEnumerator())

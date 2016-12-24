@@ -1,12 +1,12 @@
-using BasicCompiler.Core;
-using System;
-using System.IO;
-
 namespace BasicCompiler
 {
+    using System;
+    using System.IO;
+    using BasicCompiler.Core;
+
     public class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             string text = File.ReadAllText(args[0]);
 

@@ -1,20 +1,22 @@
-﻿using BasicCompiler.Core;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-
-namespace BasicCompiler.Tests
+﻿namespace BasicCompiler.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using BasicCompiler.Core;
+    using Xunit;
+
     public class ParserTests
     {
-        [Theory, ClassData(typeof(SampleInputs))]
+        [Theory]
+        [ClassData(typeof(SampleInputs))]
         public void Parse(ExpectedResult er)
         {
             Assert.Equal(er.Ast, Parser.Parse(er.Tokens));
         }
 
-        [Theory, MemberData(nameof(PropertiesData))]
+        [Theory]
+        [MemberData(nameof(PropertiesData))]
         public void Properties(AstNode node, string value, NodeType type)
         {
             Assert.Equal(value, node.Value);

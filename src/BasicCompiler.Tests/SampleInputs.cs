@@ -1,14 +1,14 @@
-﻿using BasicCompiler.Core;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using static BasicCompiler.Core.Token;
-using static BasicCompiler.Core.AstNode;
-using System.Collections;
-using System.Linq;
-
-namespace BasicCompiler.Tests
+﻿namespace BasicCompiler.Tests
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using BasicCompiler.Core;
+    using static BasicCompiler.Core.AstNode;
+    using static BasicCompiler.Core.Token;
+
     public class SampleInputs : IEnumerable<object[]>
     {
         private static ExpectedResult[] ExpectedResults { get; } =
@@ -103,7 +103,6 @@ namespace BasicCompiler.Tests
                                 .AddTwo(
                                     NumberLiteral("2"), // Injected
                                     NumberLiteral("2")))))
-
                 }
             },
             new ExpectedResult
