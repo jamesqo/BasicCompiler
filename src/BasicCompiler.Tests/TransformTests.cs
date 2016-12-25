@@ -13,6 +13,12 @@
         [ClassData(typeof(SampleInputs))]
         public void TransformAst(ExpectedResult er)
         {
+            if (er.Transforms == null)
+            {
+                Assert.Null(er.NewAsts);
+                return;
+            }
+
             var transforms = er.Transforms.ToArray();
             var newAsts = er.NewAsts.ToArray();
 
