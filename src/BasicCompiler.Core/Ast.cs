@@ -4,7 +4,12 @@
 
     public class Ast : IEquatable<Ast>
     {
-        public Ast(AstNode root) => Root = root;
+        public Ast(AstNode root)
+        {
+            // TODO: This is a temp workaround for the CLI apparently not supporting
+            // C# 7 yet. Once it does, write this as an arrow expression.
+            Root = root;
+        }
 
         public AstNode Root { get; }
 

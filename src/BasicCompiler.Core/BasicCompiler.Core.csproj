@@ -2,7 +2,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
   <PropertyGroup Label="Configuration">
     <NoWarn>1591;1701;1702;1705;SA1101;SA1204;SA1309;SA1512;SA1515;SA1600;SA1633</NoWarn>
-    <DocumentationFile>bin\Debug\netstandard1.4\BasicCompiler.Core.xml</DocumentationFile>
+    <DocumentationFile>$(MSBuildThisFileDirectory)\bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
