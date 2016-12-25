@@ -34,6 +34,8 @@ namespace BasicCompiler.Core
             throw new NotImplementedException();
         }
 
+        // TODO: Would it be better to have this as a DebuggerDisplay?
+
         public override string ToString() => $"{{ {nameof(Value)}: {Value}, {nameof(Type)}: {Type} }}";
     }
 }
