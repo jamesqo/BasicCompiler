@@ -2,7 +2,19 @@
 
 A C# reimplementation of the code at https://github.com/thejameskyle/the-super-tiny-compiler.
 
-## Code structure
+## What does it do?
+
+It takes Scheme-like syntax and converts it to C-style function calls:
+
+```
+$ cat input.txt
+(add (subtract 4 2) 4)
+
+$ BasicCompiler input.txt
+add(subtract(4, 2), 4)
+```
+
+## Project structure
 
 - Compiler logic lives in `src/BasicCompiler.Core`
 - Tests are in `src/BasicCompiler.Tests`
@@ -11,3 +23,11 @@ A C# reimplementation of the code at https://github.com/thejameskyle/the-super-t
 ## Notes
 
 - This project uses C# 7; you need VS 2017 or later to compile it.
+
+## TODO
+
+- Negative numbers
+
+## License
+
+[MIT](LICENSE)
