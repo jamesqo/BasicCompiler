@@ -108,7 +108,7 @@
             if (other == null ||
                 Type != other.Type ||
                 Value != other.Value ||
-                (object)Parent != other.Parent || // TODO: What's the best way to handle this?
+                // (object)Parent != other.Parent || // TODO: What's the best way to handle this?
                 _children.Count != other._children.Count)
             {
                 return false;

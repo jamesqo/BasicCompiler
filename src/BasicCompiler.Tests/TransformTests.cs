@@ -13,9 +13,9 @@
         [ClassData(typeof(SampleInputs))]
         public void TransformAst(ExpectedResult er)
         {
+            Assert.False(er.Transforms == null ^ er.NewAsts == null);
             if (er.Transforms == null)
             {
-                Assert.Null(er.NewAsts);
                 return;
             }
 
