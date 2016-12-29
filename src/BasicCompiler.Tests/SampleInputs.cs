@@ -29,9 +29,10 @@
                     .AddTwo(
                         NumberLiteral("4"),
                         NumberLiteral("90"))),
-                Transforms = new[]
+                Transforms = new IAstTransform[]
                 {
-                    new AddTransform(5)
+                    new AddTransform(5),
+                    new ExpressionStatementTransform()
                 },
                 NewAsts = new[]
                 {
@@ -48,7 +49,28 @@
                                 CallExpression("add") // Injected
                                 .AddTwo(
                                     NumberLiteral("5"), // Injected
-                                    NumberLiteral("90")))))
+                                    NumberLiteral("90"))))),
+                    new Ast(
+                        ExpressionStatement() // Injected
+                        .Add(
+                            CallExpression("add") // Injected
+                            .AddTwo(
+                                NumberLiteral("5"), // Injected
+                                CallExpression("add")
+                                .AddTwo(
+                                    CallExpression("add") // Injected
+                                    .AddTwo(
+                                        NumberLiteral("5"), // Injected
+                                        NumberLiteral("4")),
+                                    CallExpression("add") // Injected
+                                    .AddTwo(
+                                        NumberLiteral("5"), // Injected
+                                        NumberLiteral("90"))))))
+                },
+                Outputs = new[]
+                {
+                    "add(5, add(add(5, 4), add(5, 90)))",
+                    "add(5, add(add(5, 4), add(5, 90)));"
                 }
             },
             new ExpectedResult
@@ -74,9 +96,10 @@
                             NumberLiteral("4"),
                             NumberLiteral("1")),
                         NumberLiteral("2"))),
-                Transforms = new[]
+                Transforms = new IAstTransform[]
                 {
-                    new AddTransform(2)
+                    new AddTransform(2),
+                    new ExpressionStatementTransform()
                 },
                 NewAsts = new[]
                 {
@@ -102,7 +125,37 @@
                                 CallExpression("add") // Injected
                                 .AddTwo(
                                     NumberLiteral("2"), // Injected
-                                    NumberLiteral("2")))))
+                                    NumberLiteral("2"))))),
+                    new Ast(
+                        ExpressionStatement() // Injected
+                        .Add(
+                            CallExpression("add") // Injected
+                            .AddTwo(
+                                NumberLiteral("2"), // Injected
+                                CallExpression("add")
+                                .AddTwo(
+                                    CallExpression("add") // Injected
+                                    .AddTwo(
+                                        NumberLiteral("2"), // Injected
+                                        CallExpression("subtract")
+                                        .AddTwo(
+                                            CallExpression("add") // Injected
+                                            .AddTwo(
+                                                NumberLiteral("2"), // Injected
+                                                NumberLiteral("4")),
+                                            CallExpression("add") // Injected
+                                            .AddTwo(
+                                                NumberLiteral("2"), // Injected
+                                                NumberLiteral("1")))),
+                                    CallExpression("add") // Injected
+                                    .AddTwo(
+                                        NumberLiteral("2"), // Injected
+                                        NumberLiteral("2"))))))
+                },
+                Outputs = new[]
+                {
+                    "add(2, add(add(2, subtract(add(2, 4), add(2, 1))), add(2, 2)))",
+                    "add(2, add(add(2, subtract(add(2, 4), add(2, 1))), add(2, 2)));"
                 }
             },
             new ExpectedResult
