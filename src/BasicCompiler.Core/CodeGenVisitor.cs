@@ -53,6 +53,7 @@
 
         public void VisitCallExpression(AstNode node)
         {
+            PrepareForNextArgument();
             _sb.Append(node.Value).Append('(');
             _visitingFirstArgs.Push(true);
         }
@@ -70,19 +71,32 @@
                 throw new AstVisitorException("Visiting a NumberLiteral node when not in a CallExpression?");
             }
 
-            if (!_visitingFirstArgs.Peek())
-            {
-                _sb.Append(", ");
-            }
-            else
-            {
-                _visitingFirstArgs.Pop();
-                _visitingFirstArgs.Push(false);
-            }
-
+            PrepareForNextArgument();
             _sb.Append(node.Value);
         }
 
         public override string ToString() => _sb.ToString();
+
+        private void PrepareForNextArgument()
+        {
+            // The context stack can be empty if we're a top-level CallExpression. In that case,
+            // there's nothing to do.
+            if (_visitingFirstArgs.Count > 0)
+            {
+                if (!_visitingFirstArgs.Peek())
+                {
+                    // This is not the first argument at this call site.
+                    _sb.Append(", ");
+                }
+                else
+                {
+                    // This is the first argument at this call site. After we insert this argument,
+                    // the next argument will not be the first one, so update the context for this
+                    // call site on the stack.
+                    _visitingFirstArgs.Pop();
+                    _visitingFirstArgs.Push(false);
+                }
+            }
+        }
     }
 }

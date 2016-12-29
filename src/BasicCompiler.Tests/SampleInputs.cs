@@ -135,7 +135,7 @@
                 NewAsts = new[]
                 {
                     new Ast(
-                        ExpressionStatement()
+                        ExpressionStatement() // Injected
                         .Add(
                             CallExpression("multiply")
                             .AddTwo(
@@ -172,7 +172,68 @@
                         CallExpression("exp")
                         .AddTwo(
                             NumberLiteral("9"),
-                            NumberLiteral("1"))))
+                            NumberLiteral("1")))),
+                Transforms = new IAstTransform[]
+                {
+                    new AddTransform(0),
+                    new ExpressionStatementTransform()
+                },
+                NewAsts = new[]
+                {
+                    new Ast(
+                        CallExpression("add") // Injected
+                        .AddTwo(
+                            NumberLiteral("0"), // Injected
+                            CallExpression("exp")
+                            .AddTwo(
+                                CallExpression("add") // Injected
+                                .AddTwo(
+                                    NumberLiteral("0"), // Injected
+                                    NumberLiteral("16")),
+                                CallExpression("add") // Injected
+                                .AddTwo(
+                                    NumberLiteral("0"), // Injected
+                                    CallExpression("exp")
+                                    .AddTwo(
+                                        CallExpression("add") // Injected
+                                        .AddTwo(
+                                            NumberLiteral("0"), // Injected
+                                            NumberLiteral("9")),
+                                        CallExpression("add") // Injected
+                                        .AddTwo(
+                                            NumberLiteral("0"), // Injected
+                                            NumberLiteral("1"))))))),
+                    new Ast(
+                        ExpressionStatement() // Injected
+                        .Add(
+                            CallExpression("add") // Injected
+                            .AddTwo(
+                                NumberLiteral("0"), // Injected
+                                CallExpression("exp")
+                                .AddTwo(
+                                    CallExpression("add") // Injected
+                                    .AddTwo(
+                                        NumberLiteral("0"), // Injected
+                                        NumberLiteral("16")),
+                                    CallExpression("add") // Injected
+                                    .AddTwo(
+                                        NumberLiteral("0"), // Injected
+                                        CallExpression("exp")
+                                        .AddTwo(
+                                            CallExpression("add") // Injected
+                                            .AddTwo(
+                                                NumberLiteral("0"), // Injected
+                                                NumberLiteral("9")),
+                                            CallExpression("add") // Injected
+                                            .AddTwo(
+                                                NumberLiteral("0"), // Injected
+                                                NumberLiteral("1"))))))))
+                },
+                Outputs = new[]
+                {
+                    "add(0, exp(add(0, 16), add(0, exp(add(0, 9), add(0, 1)))))",
+                    "add(0, exp(add(0, 16), add(0, exp(add(0, 9), add(0, 1)))));"
+                }
             }
         };
 
