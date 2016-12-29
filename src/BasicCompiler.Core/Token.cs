@@ -16,6 +16,8 @@ namespace BasicCompiler.Core
 
         public TokenType Type { get; set; }
 
+        internal string DebuggerDisplay => $"{{ {nameof(Value)}: {Value}, {nameof(Type)}: {Type} }}";
+
         public static Token CloseParenthesis(string value) => new Token(value, TokenType.CloseParenthesis);
 
         public static Token Identifier(string value) => new Token(value, TokenType.Identifier);
@@ -35,7 +37,5 @@ namespace BasicCompiler.Core
         {
             throw new NotImplementedException();
         }
-
-        internal string DebuggerDisplay => $"{{ {nameof(Value)}: {Value}, {nameof(Type)}: {Type} }}";
     }
 }

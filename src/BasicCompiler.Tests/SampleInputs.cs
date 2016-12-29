@@ -144,6 +144,10 @@
                                     NumberLiteral("9"),
                                     NumberLiteral("111")),
                                 NumberLiteral("0"))))
+                },
+                Outputs = new[]
+                {
+                    "multiply(divide(9, 111), 0);"
                 }
             },
             new ExpectedResult

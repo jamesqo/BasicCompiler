@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BasicCompiler.Core
+﻿namespace BasicCompiler.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     public class CodeGenerator
     {
         public static string Stringify(Ast ast)

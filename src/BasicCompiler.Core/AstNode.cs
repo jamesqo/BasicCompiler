@@ -65,9 +65,14 @@
                 case NodeType.CallExpression:
                     visitor.VisitCallExpression(this);
                     break;
+                case NodeType.ExpressionStatement:
+                    visitor.VisitExpressionStatement(this);
+                    break;
                 case NodeType.NumberLiteral:
                     visitor.VisitNumberLiteral(this);
                     break;
+                default:
+                    throw new NotImplementedException("Did you forget to add support for a new node type?");
             }
 
             foreach (AstNode child in _children)
@@ -75,10 +80,16 @@
                 child.Accept(visitor);
             }
 
+            // If we're a type of node that can have children, we'll want to notify the visitor
+            // that we're leaving this node so it gets a chance to update its context accordingly.
+
             switch (Type)
             {
                 case NodeType.CallExpression:
                     visitor.LeaveCallExpression(this);
+                    break;
+                case NodeType.ExpressionStatement:
+                    visitor.LeaveExpressionStatement(this);
                     break;
             }
         }

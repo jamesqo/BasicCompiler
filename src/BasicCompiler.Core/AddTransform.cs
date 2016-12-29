@@ -22,7 +22,7 @@
         }
 
         /// <summary>
-        /// The constant addend that will be supplied on each "add" invocation.
+        /// Gets the constant addend that will be supplied on each "add" invocation.
         /// </summary>
         internal int Addend { get; }
 

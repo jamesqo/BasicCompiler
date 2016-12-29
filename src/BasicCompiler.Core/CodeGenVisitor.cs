@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BasicCompiler.Core
+﻿namespace BasicCompiler.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     internal class CodeGenVisitor : IAstVisitor
     {
         private readonly StringBuilder _sb;
-        private bool _visitingFirstArg;
+        private readonly Stack<bool> _visitingFirstArgs;
 
         internal CodeGenVisitor()
         {
             _sb = new StringBuilder();
-            _visitingFirstArg = true;
+            _visitingFirstArgs = new Stack<bool>();
         }
 
         public void LeaveCallExpression(AstNode node)
@@ -22,13 +22,23 @@ namespace BasicCompiler.Core
                 throw new AstVisitorException("Leaving CallExpression, but nothing has been appended to the StringBuilder yet.");
             }
 
-            if (_visitingFirstArg ^ _sb[_sb.Length - 1] != '(')
+            if (_visitingFirstArgs.Pop() ^ _sb[_sb.Length - 1] == '(')
             {
                 throw new AstVisitorException("The last character should be an open parenthesis iff there are no arguments.");
             }
 
             _sb.Append(')');
-            _visitingFirstArg = true;
+
+            // If this CallExpression is the first argument to another CallExpression, e.g.
+            // (multiply (divide 9 111) 0), we want to make sure that we update the status of
+            // `_visitingFirstArgs` appropriately for the next level up in the stack.
+            // Note: If we're the top-level CallExpression, the stack will be empty, in which
+            // case we don't have to do anything.
+            if (_visitingFirstArgs.Count > 0)
+            {
+                _visitingFirstArgs.Pop();
+                _visitingFirstArgs.Push(false);
+            }
         }
 
         public void LeaveExpressionStatement(AstNode node)
@@ -38,44 +48,36 @@ namespace BasicCompiler.Core
                 throw new AstVisitorException("Did not find closing parenthesis after leaving CallExpression.");
             }
 
-            if (!_visitingFirstArg)
-            {
-                throw new AstVisitorException("Leaving an ExpressionStatement in the middle of appending arguments?");
-            }
-
             _sb.Append(';');
         }
 
         public void VisitCallExpression(AstNode node)
         {
-            if (!_visitingFirstArg)
-            {
-                throw new AstVisitorException("Visiting a CallExpression in the middle of appending arguments?");
-            }
-
             _sb.Append(node.Value).Append('(');
+            _visitingFirstArgs.Push(true);
         }
 
         public void VisitExpressionStatement(AstNode node)
         {
-            // No-op. Appending the callee name will be taken care of by VisitCallExpression.
+            // No-op. Everything will be taken care of by VisitCallExpression.
         }
 
         public void VisitNumberLiteral(AstNode node)
         {
             // TODO: Extend check to non-first arguments.
-            if (_visitingFirstArg && (_sb.Length == 0 || _sb[_sb.Length - 1] != '('))
+            if (_visitingFirstArgs.Peek() && (_sb.Length == 0 || _sb[_sb.Length - 1] != '('))
             {
                 throw new AstVisitorException("Visiting a NumberLiteral node when not in a CallExpression?");
             }
 
-            if (!_visitingFirstArg)
+            if (!_visitingFirstArgs.Peek())
             {
                 _sb.Append(", ");
             }
             else
             {
-                _visitingFirstArg = false;
+                _visitingFirstArgs.Pop();
+                _visitingFirstArgs.Push(false);
             }
 
             _sb.Append(node.Value);

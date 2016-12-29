@@ -34,5 +34,10 @@
         /// Gets or sets the expected ASTs resulting from each transform.
         /// </summary>
         public IEnumerable<Ast> NewAsts { get; set; }
+
+        /// <summary>
+        /// Gets or sets the expected output texts after generating code for each transformed AST.
+        /// </summary>
+        public IEnumerable<string> Outputs { get; set; }
     }
 }
