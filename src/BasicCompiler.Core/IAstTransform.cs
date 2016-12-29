@@ -16,8 +16,17 @@
         IAstTransformer CreateTransformer();
     }
 
+    /// <summary>
+    /// Contains extension methods for <see cref="IAstTransform"/>.
+    /// </summary>
     public static class AstTransformExtensions
     {
+        /// <summary>
+        /// Applies a transform to an AST, producing a new AST.
+        /// </summary>
+        /// <param name="transform">The transform to apply.</param>
+        /// <param name="ast">The AST.</param>
+        /// <returns>A new AST that results from the application of the transform.</returns>
         public static Ast Apply(this IAstTransform transform, Ast ast)
         {
             if (transform == null)

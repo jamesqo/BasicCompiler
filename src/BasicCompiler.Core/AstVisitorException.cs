@@ -16,11 +16,20 @@
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AstVisitorException"/> class.
+        /// </summary>
+        /// <param name="message">The exception message.</param>
         public AstVisitorException(string message)
             : base(message)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AstVisitorException"/> class.
+        /// </summary>
+        /// <param name="message">The exception message.</param>
+        /// <param name="innerException">The inner exception.</param>
         public AstVisitorException(string message, Exception innerException)
             : base(message, innerException)
         {

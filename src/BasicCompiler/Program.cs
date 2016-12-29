@@ -6,6 +6,7 @@ namespace BasicCompiler
 
     public class Program
     {
+        // TODO: .exe needs to be tested?
         private static int Main(string[] args)
         {
             if (args.Length != 1)

@@ -9,7 +9,12 @@
     /// </summary>
     public class AddTransform : IAstTransform
     {
-        // TODO: Should we support making positioning the addend on the rhs of the call?
+        // TODO: Should we support positioning the addend on the rhs of the call?
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddTransform"/> class.
+        /// </summary>
+        /// <param name="addend">The addend.</param>
         public AddTransform(int addend)
         {
             if (addend < 0)

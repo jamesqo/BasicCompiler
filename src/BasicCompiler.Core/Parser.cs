@@ -4,6 +4,9 @@
     using System.Collections.Generic;
     using System.Text;
 
+    /// <summary>
+    /// Responsible for parsing a list of tokens into an AST.
+    /// </summary>
     public static class Parser
     {
         /// <summary>
@@ -21,6 +24,11 @@
             }
         }
 
+        /// <summary>
+        /// Parses the next sub-expression in a token stream.
+        /// </summary>
+        /// <param name="enumerator">The stream of tokens.</param>
+        /// <returns>The next sub-expression in the AST.</returns>
         private static AstNode ParseNext(IEnumerator<Token> enumerator)
         {
             Token token = enumerator.Current;

@@ -4,6 +4,9 @@ namespace BasicCompiler.Core
     using System.Collections.Generic;
     using System.Diagnostics;
 
+    /// <summary>
+    /// Responsible for converting a raw string into a list of tokens.
+    /// </summary>
     public static class Lexer
     {
         /// <summary>

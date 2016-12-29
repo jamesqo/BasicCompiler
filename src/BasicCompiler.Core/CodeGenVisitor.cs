@@ -4,11 +4,24 @@
     using System.Collections.Generic;
     using System.Text;
 
+    /// <summary>
+    /// An AST visitor used to generate code for an AST.
+    /// </summary>
     internal class CodeGenVisitor : IAstVisitor
     {
+        /// <summary>
+        /// The <see cref="StringBuilder"/> used to build the output string.
+        /// </summary>
         private readonly StringBuilder _sb;
+
+        /// <summary>
+        /// A stack of booleans indicating whether the current argument at each call site is the first.
+        /// </summary>
         private readonly Stack<bool> _visitingFirstArgs;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CodeGenVisitor"/> class.
+        /// </summary>
         internal CodeGenVisitor()
         {
             _sb = new StringBuilder();
@@ -75,8 +88,15 @@
             _sb.Append(node.Value);
         }
 
+        /// <summary>
+        /// Gets the generated code as a string.
+        /// </summary>
+        /// <returns>The generated code, as a string.</returns>
         public override string ToString() => _sb.ToString();
 
+        /// <summary>
+        /// Prepares this visitor for an argument that will be subsequently appended.
+        /// </summary>
         private void PrepareForNextArgument()
         {
             // The context stack can be empty if we're a top-level CallExpression. In that case,
