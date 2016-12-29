@@ -7,7 +7,7 @@
     /// <summary>
     /// An AST visitor used to generate code for an AST.
     /// </summary>
-    internal class CodeGenVisitor : IAstVisitor
+    internal sealed class CodeGenVisitor : IAstVisitor
     {
         /// <summary>
         /// The <see cref="StringBuilder"/> used to build the output string.

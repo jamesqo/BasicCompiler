@@ -7,7 +7,7 @@
     /// <summary>
     /// Responsible for generating code from an AST.
     /// </summary>
-    public class CodeGenerator
+    public static class CodeGenerator
     {
         /// <summary>
         /// Stringifies the AST; function calls are represented with C-style syntax.
