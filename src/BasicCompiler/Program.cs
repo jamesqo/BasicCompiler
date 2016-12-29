@@ -6,22 +6,30 @@ namespace BasicCompiler
 
     public class Program
     {
-        private static void Main(string[] args)
+        private static int Main(string[] args)
         {
+            if (args.Length != 1)
+            {
+                Console.Error.WriteLine("Usage: BasicCompiler <file>");
+                return 1;
+            }
+
             string text = File.ReadAllText(args[0]);
 
             // Expected format of code:
             // '(add (subtract 4 2) 2)'
 
             var lexed = Lexer.Lex(text);
+            var parsed = Parser.Parse(lexed);
+            var transformed = new ExpressionStatementTransform().Apply(parsed);
+            var output = CodeGenerator.Stringify(transformed);
 
-            /*
-            var parsed = Parse(lexed);
-            var transformed = Transform(parsed);
-            var output = GenerateCode(transformed);
+            // Sample output:
+            // 'add(subtract(4, 2), 2)'
 
             Console.WriteLine(output);
-            */
+
+            return 0;
         }
     }
 }
