@@ -39,17 +39,20 @@
 
         public string Value { get; }
 
-        // TODO: Should we override ToString instead of DebuggerDisplay?
-
-        private string DebuggerDisplay
+        internal string DebuggerDisplay
         {
             get
             {
-                return $"Type: {Type}, Value: {Value}, Count: {_children.Count}, Depth: {Depth}";
+                return $"{nameof(Type)}: {Type}, "
+                    + $"{nameof(Value)}: {Value}, "
+                    + $"{nameof(_children.Count)}: {_children.Count}, "
+                    + $"{nameof(Depth)}: {Depth}";
             }
         }
 
         public static AstNode CallExpression(string value) => new AstNode(value, NodeType.CallExpression);
+
+        public static AstNode ExpressionStatement() => new AstNode(null, NodeType.ExpressionStatement);
 
         public static AstNode NumberLiteral(string value) => new AstNode(value, NodeType.NumberLiteral);
 
@@ -82,15 +85,28 @@
 
         public AstNode Add(AstNode child)
         {
+            // TODO: Validate we're not a childless node like a NumberLiteral.
+
             _children.Add(child);
             child._parent = this;
             return this;
         }
 
-        public AstNode AddTwo(AstNode child1, AstNode child2) => AddMany(child1, child2);
+        public AstNode AddTwo(AstNode child1, AstNode child2)
+        {
+            // TODO: Validate we're not a childless node like a NumberLiteral.
+
+            _children.Add(child1);
+            _children.Add(child2);
+            child1._parent = this;
+            child2._parent = this;
+            return this;
+        }
 
         public AstNode AddMany(params AstNode[] children)
         {
+            // TODO: Validate we're not a childless node like a NumberLiteral.
+
             _children.AddRange(children);
 
             foreach (AstNode child in children)

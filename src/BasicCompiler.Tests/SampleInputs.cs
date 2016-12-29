@@ -127,7 +127,24 @@
                         .AddTwo(
                             NumberLiteral("9"),
                             NumberLiteral("111")),
-                        NumberLiteral("0")))
+                        NumberLiteral("0"))),
+                Transforms = new[]
+                {
+                    new ExpressionStatementTransform()
+                },
+                NewAsts = new[]
+                {
+                    new Ast(
+                        ExpressionStatement()
+                        .Add(
+                            CallExpression("multiply")
+                            .AddTwo(
+                                CallExpression("divide")
+                                .AddTwo(
+                                    NumberLiteral("9"),
+                                    NumberLiteral("111")),
+                                NumberLiteral("0"))))
+                }
             },
             new ExpectedResult
             {

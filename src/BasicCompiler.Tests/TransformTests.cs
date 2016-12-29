@@ -24,13 +24,13 @@
 
             Assert.Equal(transforms.Length, newAsts.Length);
 
-            Ast baseAst = er.Ast;
+            Ast currentAst = er.Ast;
 
             for (int i = 0; i < transforms.Length; i++)
             {
-                Ast newAst = transforms[i].Apply(baseAst);
-
+                Ast newAst = transforms[i].Apply(currentAst);
                 Assert.Equal(newAsts[i], newAst);
+                currentAst = newAst;
             }
         }
     }

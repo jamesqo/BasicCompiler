@@ -28,7 +28,8 @@
             return new TheoryData<AstNode, string, NodeType>
             {
                 { AstNode.CallExpression("foo"), "foo", NodeType.CallExpression },
-                { AstNode.NumberLiteral("100"), "100", NodeType.NumberLiteral }
+                { AstNode.NumberLiteral("100"), "100", NodeType.NumberLiteral },
+                { AstNode.ExpressionStatement(), null, NodeType.ExpressionStatement }
             };
         }
     }

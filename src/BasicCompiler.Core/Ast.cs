@@ -1,7 +1,9 @@
 ﻿namespace BasicCompiler.Core
 {
     using System;
+    using System.Diagnostics;
 
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Ast : IEquatable<Ast>
     {
         public Ast(AstNode root)
@@ -12,6 +14,8 @@
         }
 
         public AstNode Root { get; }
+
+        internal string DebuggerDisplay => $"Root: {{ {Root.DebuggerDisplay} }}";
 
         public void Accept(IAstVisitor visitor) => Root.Accept(visitor);
 
@@ -24,7 +28,5 @@
         {
             throw new NotImplementedException();
         }
-
-        // TODO: Should we override ToString and introduce a debugger proxy for this type as well?
     }
 }

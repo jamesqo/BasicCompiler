@@ -15,6 +15,11 @@
         CallExpression,
 
         /// <summary>
+        /// Indicates an expression statement.
+        /// </summary>
+        ExpressionStatement,
+
+        /// <summary>
         /// Indicates a number literal.
         /// </summary>
         NumberLiteral
